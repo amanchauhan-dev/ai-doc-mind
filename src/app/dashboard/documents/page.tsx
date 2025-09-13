@@ -1,9 +1,11 @@
 import React from 'react'
-import FileUploadDialog from '../_components/quick-upload'
+import DocumentsTable from './DocumentsTable'
 
 function page() {
     return (
-        <div><FileUploadDialog trigger="UPLOAD File" /></div>
+        <div>
+            <DocumentsTable />
+        </div>
     )
 }
 
