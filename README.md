@@ -1,37 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Document Viewer & AI Chat Client
 
-## Getting Started
+This is the **client-side application** for viewing documents and interacting with an AI-powered chat assistant. It is built with **React/Next.js**, **TypeScript**, and **Tailwind CSS** with ShadCN UI components.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- **Document Viewer**
+
+  - Preview PDF documents directly in the browser.
+  - Fallback to download or open in a new tab if preview fails.
+  - Displays document metadata: title, author, category, date, summary.
+
+- **AI Chat Assistant**
+
+  - Ask questions about the document content.
+  - Real-time chat interface with auto-scroll.
+  - Messages differentiated by role (user vs AI).
+
+- **Responsive UI**
+
+  - Desktop: side-by-side document viewer and chat.
+  - Mobile: tabbed interface for document and chat views.
+
+- **Secure API Integration**
+
+  - Fetches documents and chat data from a secure backend.
+  - Supports authentication via Axios instance.
+
+---
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone <your-repo-url>
+   cd client
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Configure environment variables:
+
+   Create a `.env.local` file in the project root:
+
+   ```
+   NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
+   ```
+
+   Replace the URL with your backend API endpoint.
+
+---
+
+## Usage
+
+1. Start the development server:
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+2. Open your browser and navigate to:
+
+   ```
+   http://localhost:3000
+   ```
+
+3. Navigate to a document page using its ID:
+
+   ```
+   /documents/<id>
+   ```
+
+---
+
+## Project Structure
+
+```
+client/
+├─ app/
+│  ├─ document/[id]/   # Document page & chat interface
+├─ components/
+│  ├─ ui/             # ShadCN UI components (Card, Tabs, Button, Input, etc.)
+├─ lib/
+│  ├─ axios.ts        # Axios instance with auth headers
+├─ styles/
+│  └─ globals.css     # Tailwind CSS setup
+├─ package.json
+└─ .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Key Components
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **DocumentPage.tsx**
 
-## Learn More
+  - Fetches document details from backend.
+  - Handles PDF preview via `embed` or download fallback.
+  - Manages AI chat session and messages.
 
-To learn more about Next.js, take a look at the following resources:
+- **PDFViewer**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - Renders PDF from a secure blob URL.
+  - Fallback UI for unsupported browsers.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **ChatWindow**
 
-## Deploy on Vercel
+  - Handles sending user questions.
+  - Displays AI responses and conversation history.
+  - Auto-scrolls to latest message.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# ai-doc-mind
+## Technologies
+
+- React / Next.js
+- TypeScript
+- Tailwind CSS
+- ShadCN UI Components
+- Axios for API requests
+- PDF `embed` for document preview
+- Optional: JWT / session-based authentication
+
+---
+
+## Notes
+
+- The PDF files are fetched securely via Axios to include authentication tokens.
+- The chat system requires a backend session to interact with the AI model.
+- Ensure your backend API is running and accessible for full functionality.
+
+---
+
+## License
+
+MIT License © \[Your Name]
