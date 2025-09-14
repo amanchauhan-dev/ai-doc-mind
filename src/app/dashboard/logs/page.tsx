@@ -1,8 +1,9 @@
 import React from 'react'
+import AccessLogsTable from './AccessLogsTable'
 
 function page() {
     return (
-        <div>logs</div>
+        <div><AccessLogsTable /></div>
     )
 }
 

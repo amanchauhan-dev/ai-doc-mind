@@ -1,4 +1,3 @@
-// app/(auth)/login/page.tsx
 "use client"
 
 import { useState } from "react"
@@ -10,6 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
+import Cookies from "js-cookie"
+import api from "@/lib/axios"
 
 export default function LoginPage() {
     const router = useRouter()
@@ -31,23 +32,27 @@ export default function LoginPage() {
 
         setLoading(true)
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login/`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username: email, password, remember }),
-                credentials: "include", // include cookies (if JWT/session)
+            const res = await api.post("/auth/login/", {
+                username: email,
+                password,
+                remember,
             })
 
-            if (res.ok) {
-                console.log(res);
+            if (res.data?.access) {
+                // Save token in cookie
+                Cookies.set("accessToken", res.data.access, {
+                    expires: remember ? 7 : 1, // 7 days if remember checked
+                    secure: process.env.NODE_ENV === "production",
+                    sameSite: "strict",
+                })
+
                 router.push("/dashboard")
             } else {
-                const data = await res.json().catch(() => ({}))
-                setError(data?.message || "Invalid credentials.")
+                setError("Invalid response from server.")
             }
-        } catch (err) {
-            console.error("Login error:", err)
-            setError("Network error. Please try again.")
+        } catch (err: any) {
+            // console.error("Login error:", err)
+            setError(err.response?.data?.message || "Invalid credentials.")
         } finally {
             setLoading(false)
         }
@@ -73,9 +78,7 @@ export default function LoginPage() {
                         <form onSubmit={handleSubmit} className="space-y-4">
                             {/* Email */}
                             <div>
-                                <Label htmlFor="email" className="text-sm">
-                                    Email
-                                </Label>
+                                <Label htmlFor="email" className="text-sm">Email</Label>
                                 <Input
                                     id="email"
                                     type="text"
@@ -89,9 +92,7 @@ export default function LoginPage() {
 
                             {/* Password */}
                             <div>
-                                <Label htmlFor="password" className="text-sm">
-                                    Password
-                                </Label>
+                                <Label htmlFor="password" className="text-sm">Password</Label>
                                 <div className="relative mt-2">
                                     <Input
                                         id="password"
