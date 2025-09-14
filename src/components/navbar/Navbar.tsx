@@ -3,9 +3,7 @@
 
 import { useState, useEffect, FC } from "react";
 import { motion } from "motion/react";
-import { Button } from "../ui/button";
-import { Sun, Moon } from "lucide-react";
-import Link from "next/link";
+import { ProgressBarLink } from "@/context/progress-bar";
 
 // Navigation component
 const Navigation: FC = () => {
@@ -19,11 +17,6 @@ const Navigation: FC = () => {
       <li className="nav-li">
         <a className="nav-link" href="#features">
           Features
-        </a>
-      </li>
-      <li className="nav-li">
-        <a className="nav-link" href="#work-flow">
-          Work-flow
         </a>
       </li>
     </ul>
@@ -59,19 +52,7 @@ const Navbar: FC = () => {
 
           {/* Right: Login + Theme Toggle + Mobile Toggle */}
           <div className="flex items-center gap-x-4">
-            <button className="hidden sm:block bg-black text-white dark:bg-white dark:text-black px-4 py-2 rounded-xl hover:bg-gray-800 transition">
-              Login
-            </button>
-
-            {/* Theme Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="text-muted-foreground"
-            >
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-            </Button>
+            <ProgressBarLink href="/login">login</ProgressBarLink>
 
             {/* Mobile Menu Toggle */}
             <button
@@ -99,7 +80,7 @@ const Navbar: FC = () => {
           <nav className="pb-5">
             <Navigation />
             <button className="mt-4 w-full bg-black text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition">
-              <Link href="/login">login</Link>
+              <ProgressBarLink href="/login">login</ProgressBarLink>
             </button>
           </nav>
         </motion.div>
