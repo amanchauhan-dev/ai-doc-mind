@@ -120,6 +120,7 @@
   body {
     @apply bg-background text-foreground;
   }
+
   .nav-ul {
     @apply flex flex-col items-center gap-4 sm:flex-row md:gap-6 relative z-20;
   }
@@ -131,4 +132,8 @@
   .nav-link {
     @apply text-lg md:text-black hover:text-black dark:text-white transition-colors;
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }

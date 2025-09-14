@@ -51,7 +51,7 @@ export default function LoginPage() {
                 setError("Invalid response from server.")
             }
         } catch (err: any) {
-            console.error("Login error:", err)
+            // console.error("Login error:", err)
             setError(err.response?.data?.message || "Invalid credentials.")
         } finally {
             setLoading(false)

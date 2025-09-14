@@ -147,6 +147,20 @@ export default function DocumentPage({ id }: Props) {
         );
     };
 
+
+    const renderDownloadButton = () => {
+        if (!pdfUrl) return null;
+
+        return (
+            <a
+                href={pdfUrl}
+                download={document?.title || "document.pdf"} // optional: custom filename
+                className="inline-block m-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80 transition"
+            >
+                View
+            </a>
+        );
+    };
     // ======================
     // RENDER FUNCTIONS
     // ======================
@@ -182,6 +196,7 @@ export default function DocumentPage({ id }: Props) {
                     ) : (
                         <div className="flex items-center justify-center h-full">Loading PDF...</div>
                     )} */}
+                    {renderDownloadButton()}
                 </CardContent>
             </Card>
         );
@@ -258,3 +273,4 @@ export default function DocumentPage({ id }: Props) {
         </div>
     );
 }
+
