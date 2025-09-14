@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css"
 import { ProgressBar } from "@/context/progress-bar";
 import { ThemeProvider } from "@/context/theme-provider";
+import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
             {children}
           </ProgressBar>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

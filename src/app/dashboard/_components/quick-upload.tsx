@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import api from "@/lib/axios"
+import { toast } from "sonner"
 
 interface FileUploadDialogProps {
     trigger: string | ReactNode
@@ -24,6 +25,7 @@ export default function FileUploadDialog({ trigger, onSuccess }: FileUploadDialo
     const [uploading, setUploading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const fileInputRef = useRef<HTMLInputElement | null>(null)
+    const [open, setOpen] = useState(false) // control dialog open state
 
     const handleDrop = (e: DragEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -49,7 +51,7 @@ export default function FileUploadDialog({ trigger, onSuccess }: FileUploadDialo
 
         const formData = new FormData()
         formData.append("file", file)
-        formData.append("title", file.name) // optional: you can add more fields like category, summary
+        formData.append("title", file.name) // optional: you can add more fields
 
         try {
             const res = await api.post("/documents/", formData, {
@@ -57,6 +59,15 @@ export default function FileUploadDialog({ trigger, onSuccess }: FileUploadDialo
             })
             console.log("Upload successful:", res.data)
             setFile(null)
+
+            // Close dialog
+            setOpen(false)
+
+            // Show toast
+            toast.success(
+                `${file.name} has been uploaded.`,
+            )
+
             if (onSuccess) onSuccess()
         } catch (err: any) {
             console.error("Upload failed:", err)
@@ -67,7 +78,7 @@ export default function FileUploadDialog({ trigger, onSuccess }: FileUploadDialo
     }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 {typeof trigger === "string" ? <Button>{trigger}</Button> : trigger}
             </DialogTrigger>
