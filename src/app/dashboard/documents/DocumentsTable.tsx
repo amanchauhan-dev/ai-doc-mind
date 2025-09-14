@@ -152,7 +152,7 @@ export default function DocumentsTable() {
                                                     asChild
                                                 >
                                                     <ProgressBarLink
-                                                        href={doc.file}
+                                                        href={`/dashboard/documents/${doc.id}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                     >

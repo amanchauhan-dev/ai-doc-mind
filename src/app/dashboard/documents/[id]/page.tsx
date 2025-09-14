@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
+import DocumentPage from "./ShowDetails";
 
-export default function page() {
-    return (
-        <div>
-            page
-        </div>
-    )
+interface PageProps {
+    params: { id: string }; // dynamic route param
+}
+
+export default async function Page({ params }: PageProps) {
+    const { id } = await params
+    return <DocumentPage id={id} />;
 }
